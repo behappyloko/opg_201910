@@ -33,10 +33,12 @@ namespace opg_201910_interview.Controllers
         [HttpGet("GetFiles")]
         public IActionResult GetFiles()
         {
-            // gets the path from the settings
-            string targetDirectory = _configuration["ClientSettings:FileDirectoryPath"].Replace("/", "\\");            
+            // gets the path from the settings, but should come from db
+            string targetDirectory = _configuration["ClientSettings:FileDirectoryPath"].Replace("/", "\\");
+            // should come from db
+            string[] customSort = { "shovel", "waghor", "blaze", "discus" };
 
-            return Ok(_readService.ReadDirectory(targetDirectory).Select(f => f.Name));
+            return Ok(_readService.ReadDirectory(targetDirectory, customSort).Select(f => f.Name));
         }
     }
 }
